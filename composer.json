@@ -1,0 +1,25 @@
+{
+    "name": "gabrielSoares522/chat",
+    "description": "Aplicação web de um chat",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Gabriel Soares",
+        "email": "gabrielcsoares52@gmail.com"
+      }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Source\\": "source/"
+      },
+      "files": [
+        "source/Config.php"
+      ]
+    },
+    "require": {
+      "coffeecode/router": "1.0.*",
+      "coffeecode/datalayer": "1.1.*",
+      "league/plates": "v4.0.0-alpha"
+    }
+}
