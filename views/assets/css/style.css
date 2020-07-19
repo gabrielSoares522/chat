@@ -7,10 +7,17 @@
     --cor-enviadas:#99ffcc;
     --cor-recebidas:#dddddd;
     --cor-chat:#fff;
+    --tam-cabecalho:80px;
+    --tam-form_msg:40px;
+    --tam-info_usuario:350px;
 }
 body{
     margin: 0;
     padding: 0;
+}
+
+a {
+    text-decoration: none;
 }
 * {
     font-family: Arial, Helvetica, sans-serif;
@@ -46,7 +53,7 @@ body{
     border-radius: 3px;
 }
 
-.form_cadastro{
+.form_cadastro {
     background-color: var(--cor-pricinpal);
     width: 300px;
     padding: 30px;
@@ -59,4 +66,123 @@ body{
     margin:5px 0;
     padding: 4px;
     box-sizing: border-box;
+}
+
+#info_usuario {
+    color: #fff;
+    position: fixed;
+    width: var(--tam-info_usuario);
+    top: 0;
+    bottom: 0;
+    background-color: var(--cor-pricinpal);
+}
+#nome_usuario{
+    height: var(--tam-cabecalho);
+}
+#nome_usuario p{
+    margin-left: 10px;
+    float: left;
+    font-size: large;
+    font-weight: bolder;
+}
+
+#chat {
+    position: fixed;
+    left: var(--tam-info_usuario);
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#cabecalho_chat {
+    background-color: var(--cor-pricinpal);
+    height: var(--tam-cabecalho);
+    box-sizing: border-box;
+    padding: 10px 5px;
+    width: 100%;
+    position: absolute;
+}
+
+#corpo_chat {
+    top: var(--tam-cabecalho);
+    bottom: var(--tam-form_msg);
+    width: 100%;
+    position: absolute;
+    overflow-y: auto;
+}
+
+#form_mensagem {
+    background-color: var(--cor-pricinpal);
+    height: var(--tam-form_msg);
+    box-sizing: border-box;
+    padding: 10px 5px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.item_contato {
+    border-bottom: 1px solid #1a9740;
+    padding: 5px 20px;
+}
+
+.msg {
+    padding: 2px 10px;
+    width: 200px;
+    margin:3px;
+    border-radius: 4px;
+}
+
+.recebida {
+    background-color: var(--cor-recebidas);
+    float:left;
+}
+
+.enviada {
+    background-color: var(--cor-enviadas);
+    float: right;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+li {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+li:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+.dropdown {
+    padding-top: 9px;
+    position: relative;
+    display: inline-block;
+    float: right;
+}
+
+.dropdown span{
+    padding: 0 9px 9px 9px;
+    font-size: 25px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--cor-secundaria);
+    min-width: 50px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+  
+.dropdown:hover .dropdown-content {
+    display: block;
 }
