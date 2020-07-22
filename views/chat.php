@@ -11,13 +11,11 @@
         </div>
     </div>
     <div id="lista_contatos">
-        <ul>
         <?php
             for($i=0;$i<5;$i++):
                 $v->insert("contato",["nome"=>"Nome","conversa"=>1]);
             endfor;
         ?>
-        </ul>
     </div>
 </div>
 <div id="chat">
@@ -36,6 +34,7 @@
     </div>
     <div id="form_mensagem">
         <form method="post" action = "">
+            <input type="hidden" name="hdConversa" id="hdConversa">
             <input type="text" name="txtMsg" id="txtMsg">
             <button>Enviar</button>
         </form>
@@ -44,10 +43,17 @@
 
 <?php $v->start("js"); ?>
 <script>
-    var objDiv = document.getElementById("corpo_chat");
-    objDiv.scrollTop = objDiv.scrollHeight;
     $(function(){
         
     });
+    function seleContato(btn){
+        var chat = document.getElementById("chat");
+        var conversa = document.getElementById("hdConversa");
+
+        chat.style = "display: block";
+        conversa.value = btn.value;
+        var corpo = document.getElementById("corpo_chat");
+        corpo.scrollTop = corpo.scrollHeight;
+    }
 </script>
 <?php $v->end(); ?>

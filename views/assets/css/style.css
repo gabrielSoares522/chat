@@ -87,6 +87,7 @@ a {
 }
 
 #chat {
+    display: none;
     position: fixed;
     left: var(--tam-info_usuario);
     right: 0;
@@ -122,8 +123,24 @@ a {
 }
 
 .item_contato {
-    border-bottom: 1px solid #1a9740;
-    padding: 5px 20px;
+    box-sizing: border-box;
+    display: block;
+    height: 70px;
+    width: 100%;
+    padding-left: 30px;
+    font-size: larger;
+    text-align: left;
+    vertical-align: middle;
+    background-color: chartreuse;
+    border:none;
+    border-bottom: 1px solid seagreen;
+    border-radius: 3px;
+    font-weight: bolder;
+}
+
+.item_contato:hover {
+    cursor: pointer;
+    background-color: var(--cor-secundaria);
 }
 
 .msg {

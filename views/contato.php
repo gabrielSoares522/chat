@@ -1,5 +1,3 @@
-<li>
-    <div class ="item_contato">
-        <p><?= "{$nome}"; ?></p>
-    </div>
-</li>
+<button class ="item_contato" value="<?= $conversa;?>" name="contato" onclick="seleContato(this)">
+    <p><?= "{$nome}"; ?></p>
+</button>
