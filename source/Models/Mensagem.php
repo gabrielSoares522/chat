@@ -15,6 +15,6 @@ class Mensagem extends DataLayer
      */
     public function __construct()
     {
-        parent::__construct("mensagen", ["id_conversa", "id_usuario","dt_envio","ds_mensagem"],"id",false);
+        parent::__construct("mensagem", ["id_conversa", "id_usuario","dt_envio","ds_mensagem"],"id",false);
     }
 }
