@@ -1,7 +1,7 @@
 <?php $v->layout("_theme", []); ?>
 
 <div class="form_cadastro">
-    <form method="get" action="<?= $router->route("Controller.login"); ?>">
+    <form method="post" action="<?= $router->route("Controller.criarConta"); ?>">
         <label for="txtLogin">Login</label>
         <input type="text" name="txtLogin" id="txtLogin">
         <label for="txtEmail">Email</label>
@@ -21,7 +21,6 @@
 <script>
     $(function(){
         $("form").submit(function (e){
-            e.preventDefault();
             var erro = $(".erro");
             var txtLogin = $("#txtLogin");
             var txtEmail = $("#txtEmail");
@@ -32,20 +31,24 @@
             erro.text("");
             if(txtLogin.val() ==""){
                 erro.text("preencha o campo login");
+                e.preventDefault();
                 return;
             }
             
             if(txtEmail.val() ==""){
                 erro.text("preencha o campo email");
+                e.preventDefault();
                 return;
             }
             
             if(txtSenha.val() ==""){
                 erro.text("preencha o campo senha");
+                e.preventDefault();
                 return;
             }
             if(txtRepSenha.val() ==""){
                 erro.text("preencha o campo repetir senha");
+                e.preventDefault();
                 return;
             }
 
@@ -53,6 +56,7 @@
                 txtSenha.val("");
                 txtRepSenha.val("");
                 erro.text("senha digitada de forma incorreta");
+                e.preventDefault();
                 return;
             }
         });

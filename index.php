@@ -12,6 +12,8 @@ $router->get("/", "Controller:chat","Controller.chat");
 $router->get("/login", "Controller:login","Controller.login");
 $router->get("/cadastro", "Controller:cadastro","Controller.cadastro");
 $router->post("/criarConta", "Controller:criarConta","Controller.criarConta");
+$router->post("/entrar", "Controller:entrar","Controller.entrar");
+$router->get("/sair", "Controller:sair","Controller.sair");
 //$router->get("/entrando", "Controller:receber");
 //$router->post("/addContato", "Controller:addContato");
 

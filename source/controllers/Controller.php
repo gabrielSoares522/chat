@@ -26,31 +26,51 @@ class Controller
     public function cadastro():void
     {
         echo $this->view->render("cadastro",[]);
+        
     }
-
     public function criarConta(array $data):void
     {
-        $dados =filter_var_array($data,FILTER_SANITAZE_STRING);
-        
+        $dados = filter_var_array($data);
+            
         if(in_array("",$dados)){
             $callback["message"] = message("Preencha todos os campos!","error");
             echo json_encode();
             return;
         }
-
+    
         $usuario = new Usuario();
         $usuario->nm_login = $dados["txtLogin"];
         $usuario->nm_email = $dados["txtEmail"];
-        $usuario->nm_senha = $dados["txtSenha"];
+        $usuario->nm_senha = md5($dados["txtSenha"]);
         $usuario->ft_perfil = $dados["fotoPerfil"];
-
+    
         $usuario->save();
-
-        $callback["message"] = message("Conta criada!","success");
-
-        echo json_encode($callback);
+        
+        echo $this->view->render("criarConta",[]);
+        //$callback["message"] = message("Conta criada!","success");
+        //echo json_encode($callback);
     }
 
+    public function entrar(array $data):void
+    {
+        $data = filter_var_array($data);
+        $entrou = true;
+        
+        $usuario = (new Usuario())->find("nm_login = '".$data["txtLogin"]."'")->fetch(true);
+        if(empty($usuario)){
+            $entrou=false;
+        }
+        else{
+            if(md5($data["txtSenha"]) != $usuario[0]->nm_senha){
+                $entrou=false;
+            }
+        }
+        echo $this->view->render("entrar",["entrou" => $entrou, "login"=>$data["txtLogin"]]);
+    }
+
+    public function sair():void{
+        echo $this->view->render("sair",[]);
+    }
     public function criarContato(array $data):void
     {
 

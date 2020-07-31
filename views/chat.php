@@ -1,12 +1,19 @@
-<?php $v->layout("_theme", []); ?>
+<?php 
+session_start();
+if(empty($_SESSION["login"])){
+    header("location:".$router->route("Controller.login"));
+}
+
+$v->layout("_theme", []);
+?>
 
 <div id="info_usuario">
     <div id="nome_usuario">
-        <p>Nome</p>
+        <p><?= $_SESSION["login"]; ?></p>
         <div class="dropdown">
             <span>Menu</span>
             <div class="dropdown-content">
-                <a href = "<?= $router->route("Controller.login"); ?>">Sair</a>
+                <a href = "<?= $router->route("Controller.sair"); ?>">Sair</a>
             </div>
         </div>
     </div>
