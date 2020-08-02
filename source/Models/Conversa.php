@@ -17,4 +17,14 @@ class Conversa extends DataLayer
     {
         parent::__construct("conversa", ["dt_criacao"],"id",false);
     }
+
+    public function add()
+    {
+        $conversa = new conversa();
+        $dt_criacao = date('Y-m-d H:i:s');
+
+        $conversa->dt_criacao = $dt_criacao;
+        $conversa->save();
+        return $conversa->id;
+    }
 }

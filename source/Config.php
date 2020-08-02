@@ -16,6 +16,8 @@ define("DATA_LAYER_CONFIG", [
     ]
 ]);
 
+date_default_timezone_set("America/Sao_Paulo");
+
 /**
  * @param string $path
  * @return string

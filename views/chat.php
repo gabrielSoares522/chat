@@ -1,9 +1,7 @@
 <?php 
-session_start();
 if(empty($_SESSION["login"])){
     header("location:".$router->route("Controller.login"));
 }
-
 $v->layout("_theme", []);
 ?>
 
@@ -19,10 +17,19 @@ $v->layout("_theme", []);
     </div>
     <div id="lista_contatos">
         <?php
-            for($i=0;$i<5;$i++):
-                $v->insert("contato",["nome"=>"Nome","conversa"=>1]);
-            endfor;
+        if(!empty($contatos)):
+            foreach($contatos as $item):
+                $v->insert("contato",["nome"=>$item->nm_contato,"conversa"=>$item->id_conversa]);
+            endforeach;
+        endif;
         ?>
+    </div>
+    <div id="div_add_contato">
+        <form class="form_add_contato" method="post" action="<?= $router->route("Controller.addContato"); ?>">
+            <input type="hidden" name="hdLogin" id="hdLogin" value="<?= $_SESSION["login"] ?>"/>
+            <input type="text" id="txtAddContato" name="txtAddContato"/>
+            <input type="submit" value="Adicionar" id="btnAddContato" name="btnAddContato"/>
+        </form>
     </div>
 </div>
 <div id="chat">
@@ -40,7 +47,7 @@ $v->layout("_theme", []);
         </ul>
     </div>
     <div id="form_mensagem">
-        <form method="post" action = "">
+        <form class="form_add_mensagem" method="post" action = "">
             <input type="hidden" name="hdConversa" id="hdConversa">
             <input type="text" name="txtMsg" id="txtMsg">
             <button>Enviar</button>
@@ -51,16 +58,40 @@ $v->layout("_theme", []);
 <?php $v->start("js"); ?>
 <script>
     $(function(){
-        
-    });
-    function seleContato(btn){
-        var chat = document.getElementById("chat");
-        var conversa = document.getElementById("hdConversa");
+        $(".item_contato").click(function (e){
+            var botao = $(this);
+            var chat = $("#chat");
+            var conversa = $("#hdConversa");
+            var corpoChat = $("#corpo_chat");
 
-        chat.style = "display: block";
-        conversa.value = btn.value;
-        var corpo = document.getElementById("corpo_chat");
-        corpo.scrollTop = corpo.scrollHeight;
-    }
+            chat.css("display","block");
+            conversa.val(botao.val());
+            corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
+        });
+
+        $(".form_add_contato").submit(function (e){
+            e.preventDefault();
+            var form = $(this);
+            var loginContato = $("#txtAddContato");
+
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                type: "POST",
+                dataType: "json",
+                beforeSend: function(){
+
+                },
+                success: function(callback){
+                    if(callback.contato){
+                        $("#lista_contatos").prepend(callback.contato);
+                    }
+                },
+                complete: function(){
+
+                }
+            });
+        });
+    });
 </script>
 <?php $v->end(); ?>
