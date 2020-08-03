@@ -15,6 +15,9 @@ $router->post("/criarConta", "Controller:criarConta","Controller.criarConta");
 $router->post("/entrar", "Controller:entrar","Controller.entrar");
 $router->get("/sair", "Controller:sair","Controller.sair");
 $router->post("/addContato", "Controller:addContato","Controller.addContato");
+$router->post("/enviarMsg", "Controller:enviarMsg","Controller.enviarMsg");
+$router->post("/buscarConversa", "Controller:buscarConversa","Controller.buscarConversa");
+
 
 $router->dispatch();
 

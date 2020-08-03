@@ -17,4 +17,15 @@ class Mensagem extends DataLayer
     {
         parent::__construct("mensagem", ["id_conversa", "id_usuario","dt_envio","ds_mensagem"],"id",false);
     }
+    public function add($idUsuario,$idConversa,$texto)
+    {
+        $mensagem = new Mensagem();
+        $dtEnvio = date('Y-m-d H:i:s');
+
+        $mensagem->id_conversa = $idConversa;
+        $mensagem->id_usuario = $idUsuario;
+        $mensagem->dt_envio = $dtEnvio;
+        $mensagem->ds_mensagem = $texto;
+        $mensagem->save();
+    }
 }

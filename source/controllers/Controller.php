@@ -4,6 +4,7 @@ namespace Source\controllers;
 use Source\models\Usuario;
 use Source\models\Contato;
 use Source\models\Conversa;
+use Source\models\Mensagem;
 use League\Plates\Engine;
 
 class Controller
@@ -99,9 +100,23 @@ class Controller
         echo json_encode($callback);
     }
 
-    public function enviarMensagem(array $data):void
+    public function enviarMsg(array $data):void
     {
+        $data = filter_var_array($data,FILTER_SANITIZE_STRING);
+
         
+        $conversa = $data["hdConversa"];
+        $mensgagem = $data["txtMsg"];
+        $usuario = (new Usuario())->find("nm_login = '".$data["hdLoginMsg"]."'")->fetch(true);
+
+        $idUsuario = $usuario[0]->id;
+
+        $mensagem = new Mensagem();
+
+        $mensagem->add($idUsuario,$data["hdConversa"],$data["txtMsg"]);
+
+        $callback["enviada"] = $this->view->render("mensagem",["tipo"=>"enviada","texto"=>$data["txtMsg"]]);
+        echo json_encode($callback);
     }
 
     public function buscarConversa(array $data):void

@@ -37,17 +37,18 @@ $v->layout("_theme", []);
         <p>Contato</p>
     </div>
     <div id="corpo_chat">
-        <ul>
+        <ul class="lista_mensgens">
         <?php
-            for($i=0;$i<14;$i++):
+            /*for($i=0;$i<14;$i++):
                 $tipo =($i%2)?"recebida":"enviada";
                 $v->insert("mensagem",["tipo"=>$tipo,"texto"=>"teste"]);
-            endfor;
+            endfor;*/
         ?>
         </ul>
     </div>
     <div id="form_mensagem">
-        <form class="form_add_mensagem" method="post" action = "">
+        <form class="form_add_mensagem" method="post" action = "<?= $router->route("Controller.enviarMsg"); ?>">
+            <input type="hidden" name="hdLoginMsg" id="hdLoginMsg" value="<?= $_SESSION["login"] ?>"/>
             <input type="hidden" name="hdConversa" id="hdConversa">
             <input type="text" name="txtMsg" id="txtMsg">
             <button>Enviar</button>
@@ -63,8 +64,10 @@ $v->layout("_theme", []);
             var chat = $("#chat");
             var conversa = $("#hdConversa");
             var corpoChat = $("#corpo_chat");
-
+            var cabecalho = $("#cabecalho_chat");
+            
             chat.css("display","block");
+            cabecalho.html("<p>"+botao.text()+"</p>");
             conversa.val(botao.val());
             corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
         });
@@ -73,7 +76,10 @@ $v->layout("_theme", []);
             e.preventDefault();
             var form = $(this);
             var loginContato = $("#txtAddContato");
-
+            if(loginContato.val() ==""){
+                alert("digite o login do contato!");
+                return;
+            }
             $.ajax({
                 url: form.attr("action"),
                 data: form.serialize(),
@@ -91,6 +97,44 @@ $v->layout("_theme", []);
 
                 }
             });
+        });
+
+        $(".form_add_mensagem").submit(function (e){
+            e.preventDefault();
+            var form = $(this);
+            var conversa = $("#hdConversa");
+            var mensagem = $("#txtMsg");
+            var corpoChat = $("#corpo_chat");
+
+            if(conversa.val() ==""){
+                alert("erro no envio da mensagem recarregue a pagina!");
+                return;
+            }
+            
+            if(mensagem.val() ==""){
+                return;
+            }
+
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                type: "POST",
+                dataType: "json",
+                beforeSend: function(){
+
+                },
+                success: function(callback){
+                    if(callback.enviada){
+                        $(".lista_mensgens").append(callback.enviada);
+                        corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
+                    }
+                },
+                complete: function(){
+
+                }
+            });
+            
+            mensagem.val("");
         });
     });
 </script>
