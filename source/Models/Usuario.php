@@ -24,6 +24,11 @@ class Usuario extends DataLayer
         $usuario = (new Usuario())->find("nm_login = '".$login."'")->fetch(true);
         return $usuario[0];
     }
+
+    public function getId(string $login){
+        $usuario = (new Usuario())->find("nm_login = '".$login."'")->fetch(true);
+        return $usuario[0]->id;
+    }
     
     public function getContatos()
     {

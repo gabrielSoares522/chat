@@ -1,4 +1,3 @@
-<button class ="item_contato" value="<?= $conversa;?>" name="contato">
-    <p><?= "{$nome}"; ?></p>
+<button type="submit" class ="item_contato" value="<?= $conversa;?>" name="contato">
+    <?= "{$nome}"; ?>
 </button>
-<!--onclick="seleContato(this)"-->

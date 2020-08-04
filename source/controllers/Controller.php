@@ -103,7 +103,6 @@ class Controller
     public function enviarMsg(array $data):void
     {
         $data = filter_var_array($data,FILTER_SANITIZE_STRING);
-
         
         $conversa = $data["hdConversa"];
         $mensgagem = $data["txtMsg"];
@@ -121,7 +120,23 @@ class Controller
 
     public function buscarConversa(array $data):void
     {
+        $data = filter_var_array($data,FILTER_SANITIZE_STRING);
+        $idUsuario = (new Usuario())->getId($data["hdLoginCov"]);
         
+        $mensagens = (new Mensagem("id_conversa=".$data["hdNovaCov"]))->find()->fetch(true);
+        
+        $callback["conversa"]="";
+
+        foreach($mensagens as $mensagem):
+
+            if($mensagem->id_usuario == $idUsuario) { $tipo="enviada"; }
+            else { $tipo="recebida"; }
+
+            $novaMsg=$this->view->render("mensagem",["tipo"=>$tipo,"texto"=>$mensagem->ds_mensagem]);
+            $callback["conversa"] = $callback["conversa"].$novaMsg;
+        endforeach;
+
+        echo json_encode($callback);
     }
 
     public function atualizarMensagem(array $data):void

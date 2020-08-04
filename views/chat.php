@@ -16,17 +16,22 @@ $v->layout("_theme", []);
         </div>
     </div>
     <div id="lista_contatos">
-        <?php
-        if(!empty($contatos)):
-            foreach($contatos as $item):
-                $v->insert("contato",["nome"=>$item->nm_contato,"conversa"=>$item->id_conversa]);
-            endforeach;
-        endif;
-        ?>
+        <form class="form_abrir_conversa" method="post" action="<?= $router->route("Controller.buscarConversa");?>">
+            <input type="hidden" name="hdLoginCov" id="hdLoginCov" value="<?= $_SESSION["login"] ?>"/>
+            <input type="hidden" name="hdNovaCov" id="hdNovaCov"/>
+            <?php
+            if(!empty($contatos)):
+                foreach($contatos as $item):
+                    $v->insert("contato",["nome"=>$item->nm_contato,"conversa"=>$item->id_conversa]);
+                endforeach;
+            endif;
+            ?>
+        </form>
     </div>
     <div id="div_add_contato">
         <form class="form_add_contato" method="post" action="<?= $router->route("Controller.addContato"); ?>">
             <input type="hidden" name="hdLogin" id="hdLogin" value="<?= $_SESSION["login"] ?>"/>
+            
             <input type="text" id="txtAddContato" name="txtAddContato"/>
             <input type="submit" value="Adicionar" id="btnAddContato" name="btnAddContato"/>
         </form>
@@ -37,13 +42,7 @@ $v->layout("_theme", []);
         <p>Contato</p>
     </div>
     <div id="corpo_chat">
-        <ul class="lista_mensgens">
-        <?php
-            /*for($i=0;$i<14;$i++):
-                $tipo =($i%2)?"recebida":"enviada";
-                $v->insert("mensagem",["tipo"=>$tipo,"texto"=>"teste"]);
-            endfor;*/
-        ?>
+        <ul class="lista_mensagens">
         </ul>
     </div>
     <div id="form_mensagem">
@@ -61,15 +60,42 @@ $v->layout("_theme", []);
     $(function(){
         $(".item_contato").click(function (e){
             var botao = $(this);
-            var chat = $("#chat");
             var conversa = $("#hdConversa");
-            var corpoChat = $("#corpo_chat");
             var cabecalho = $("#cabecalho_chat");
+            var novaCov = $("#hdNovaCov");
+
+            cabecalho.html("<p>"+botao.text()+"</p>");
+            novaCov.val(botao.val());
+            conversa.val(botao.val());
+        });
+
+        $(".form_abrir_conversa").submit(function (e){
+            var form = $(this);
+            var chat = $("#chat");
+            var corpoChat = $("#corpo_chat");
             
             chat.css("display","block");
-            cabecalho.html("<p>"+botao.text()+"</p>");
-            conversa.val(botao.val());
-            corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
+
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                type: "POST",
+                dataType: "json",
+                beforeSend: function(){
+
+                },
+                success: function(callback){
+                    if(callback.conversa){
+                        $(".lista_mensagens").html("");
+                        $(".lista_mensagens").append(callback.conversa);
+                        corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
+                    }
+                },
+                complete: function(){
+
+                }
+            });
+            e.preventDefault();
         });
 
         $(".form_add_contato").submit(function (e){
@@ -125,7 +151,7 @@ $v->layout("_theme", []);
                 },
                 success: function(callback){
                     if(callback.enviada){
-                        $(".lista_mensgens").append(callback.enviada);
+                        $(".lista_mensagens").append(callback.enviada);
                         corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
                     }
                 },
