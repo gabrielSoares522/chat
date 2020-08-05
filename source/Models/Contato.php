@@ -44,11 +44,20 @@ class Contato extends DataLayer
         return ["nome"=>$contato,"conversa"=>$idConversa];
     }
 
-    public function visualizar(string $usuario,string $contato){
+    public function getContato(int $idUsuario,int $idConversa)
+    {
+        $contato = (new Contato())->find("id_usuario = :idu AND id_conversa = :idc","idu={$idUsuario}&idc={$idConversa}")->fetch(true);
+        return $contato[0];
+    }
 
-        $idUsuario = (new Usuario())->getId($usuario);
-        $idContato = (new Usuario())->getId($contato);
-        
-        $contato = new Contato();
+    public function visualizar(int $idUsuario,int $idConversa)
+    {
+        $contato = (new Contato())->getContato($idUsuario,$idConversa);
+        $data=date("Y-m-d H:i:s");
+
+        $contato->dt_visualizacao = $data;
+        $contato->save();
+
+        return $data;
     }
 }

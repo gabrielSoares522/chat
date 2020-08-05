@@ -114,6 +114,8 @@ class Controller
 
         $mensagem->add($idUsuario,$data["hdConversa"],$data["txtMsg"]);
 
+        $contato = (new Contato())->visualizar($idUsuario,$data["hdConversa"]);
+
         $callback["enviada"] = $this->view->render("mensagem",["tipo"=>"enviada","texto"=>$data["txtMsg"]]);
         echo json_encode($callback);
     }
@@ -122,9 +124,11 @@ class Controller
     {
         $data = filter_var_array($data,FILTER_SANITIZE_STRING);
         $idUsuario = (new Usuario())->getId($data["hdLoginCov"]);
-        
+
         $mensagens = (new Mensagem("id_conversa=".$data["hdNovaCov"]))->find()->fetch(true);
         
+        (new Contato())->visualizar($idUsuario,$data["hdNovaCov"]);
+
         $callback["conversa"]="";
 
         foreach($mensagens as $mensagem):
@@ -141,6 +145,25 @@ class Controller
 
     public function atualizarMensagem(array $data):void
     {
+        $data = filter_var_array($data,FILTER_SANITIZE_STRING);
+        $idUsuario = (new Usuario())->getId($data["login"]);
+        $idConversa = $data["idConversa"];
+
+        $visualizacao = (new Contato())->getContato($idUsuario,$idConversa)->dt_visualizacao;
+        $mensagens = (new Mensagem())->getMensagens($idConversa,$visualizacao);
+
+        if(!empty($mensagens)){
+            foreach($mensagens as $mensagem){
+                if($mensagem->id_usuario == $idUsuario) { $tipo="enviada"; }
+                else { $tipo="recebida"; }
+
+                $msg = $this->view->render("mensagem",["tipo"=>$tipo,"texto"=>$mensagem->ds_mensagem]);
+                if(isset($data["resposta"])){$data["resposta"] =  $data["resposta"].$msg;}
+                else{$data["resposta"] = $msg;}
+            }
+            (new Contato())->visualizar($idUsuario,$idConversa);
+            echo json_encode($data);
+        }
 
     }
 }

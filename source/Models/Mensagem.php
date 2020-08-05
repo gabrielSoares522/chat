@@ -17,6 +17,13 @@ class Mensagem extends DataLayer
     {
         parent::__construct("mensagem", ["id_conversa", "id_usuario","dt_envio","ds_mensagem"],"id",false);
     }
+
+    public function getMensagens($idConversa,$visualizacao)
+    {
+        $mensagens = (new Mensagem())->find("id_conversa = {$idConversa} AND dt_envio >'{$visualizacao}'")->fetch(true);
+        return $mensagens;
+    }
+
     public function add($idUsuario,$idConversa,$texto)
     {
         $mensagem = new Mensagem();

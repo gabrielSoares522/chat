@@ -44,6 +44,8 @@ $v->layout("_theme", []);
     <div id="corpo_chat">
         <ul class="lista_mensagens">
         </ul>
+        <form class="fm_atualizar_mensagem" method="post" action = "<?= $router->route("Controller.atualizarMensagem"); ?>">
+        </form>
     </div>
     <div id="form_mensagem">
         <form class="form_add_mensagem" method="post" action = "<?= $router->route("Controller.enviarMsg"); ?>">
@@ -58,6 +60,26 @@ $v->layout("_theme", []);
 <?php $v->start("js"); ?>
 <script>
     $(function(){
+        setInterval(() => {
+            var form = $(".fm_atualizar_mensagem");
+            var idConversa = $("#hdConversa").val();
+            var login = $("#hdLoginMsg").val();
+            var corpoChat = $("#corpo_chat");
+            
+            if(idConversa=="") { return; }
+
+            $.post(form.attr("action"),{
+                idConversa: idConversa,
+                login: login
+                }, function(data,status) {
+                    if(data){
+                        var resultado = JSON.parse(data);
+                        $(".lista_mensagens").append(resultado.resposta);
+                        corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
+                    }
+                });
+        }, 1000);
+        
         $(".item_contato").click(function (e){
             var botao = $(this);
             var conversa = $("#hdConversa");
@@ -81,18 +103,14 @@ $v->layout("_theme", []);
                 data: form.serialize(),
                 type: "POST",
                 dataType: "json",
-                beforeSend: function(){
-
-                },
                 success: function(callback){
+                    //beforeSend: function(){ },
+                    //,complete: function(){ }
                     if(callback.conversa){
                         $(".lista_mensagens").html("");
                         $(".lista_mensagens").append(callback.conversa);
                         corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
                     }
-                },
-                complete: function(){
-
                 }
             });
             e.preventDefault();
@@ -110,17 +128,13 @@ $v->layout("_theme", []);
                 url: form.attr("action"),
                 data: form.serialize(),
                 type: "POST",
-                dataType: "json",
-                beforeSend: function(){
-
-                },
+                dataType: "json",                
                 success: function(callback){
+                    //beforeSend: function(){ },
+                    //,complete: function(){ }
                     if(callback.contato){
                         $("#lista_contatos").prepend(callback.contato);
                     }
-                },
-                complete: function(){
-
                 }
             });
         });
@@ -146,17 +160,13 @@ $v->layout("_theme", []);
                 data: form.serialize(),
                 type: "POST",
                 dataType: "json",
-                beforeSend: function(){
-
-                },
                 success: function(callback){
+                    //beforeSend: function(){ },
+                    //,complete: function(){ }
                     if(callback.enviada){
                         $(".lista_mensagens").append(callback.enviada);
                         corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
                     }
-                },
-                complete: function(){
-
                 }
             });
             

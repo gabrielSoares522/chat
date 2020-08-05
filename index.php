@@ -17,6 +17,7 @@ $router->get("/sair", "Controller:sair","Controller.sair");
 $router->post("/addContato", "Controller:addContato","Controller.addContato");
 $router->post("/enviarMsg", "Controller:enviarMsg","Controller.enviarMsg");
 $router->post("/buscarConversa", "Controller:buscarConversa","Controller.buscarConversa");
+$router->post("/atualizarMensagem", "Controller:atualizarMensagem","Controller.atualizarMensagem");
 
 
 $router->dispatch();
