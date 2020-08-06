@@ -20,8 +20,8 @@ class Controller
         session_start();
         $login = $_SESSION["login"];
         if(isset($_SESSION["login"])){
-            $usuario = (new Usuario())->find("nm_login = '".$login."'")->fetch(true);
-            echo $this->view->render("chat",["contatos"=>$usuario[0]->getContatos()]);
+            $usuario = (new Usuario())->getUsuario($login);
+            echo $this->view->render("chat",["contatos"=>$usuario->getContatos()]);
         }
         else{
             echo $this->view->render("chat",[]);
@@ -48,13 +48,7 @@ class Controller
             return;
         }
     
-        $usuario = new Usuario();
-        $usuario->nm_login = $dados["txtLogin"];
-        $usuario->nm_email = $dados["txtEmail"];
-        $usuario->nm_senha = md5($dados["txtSenha"]);
-        $usuario->ft_perfil = $dados["fotoPerfil"];
-    
-        $usuario->save();
+        $usuario = (new Usuario())->add($dados["txtLogin"],$dados["txtEmail"],$dados["txtSenha"],$dados["fotoPerfil"]);
         
         echo $this->view->render("criarConta",[]);
     }
@@ -64,12 +58,13 @@ class Controller
         $data = filter_var_array($data,FILTER_SANITIZE_STRING);
         $entrou = true;
         
-        $usuario = (new Usuario())->find("nm_login = '".$data["txtLogin"]."'")->fetch(true);
+        $usuario = (new Usuario())->getUsuario($data["txtLogin"]);
+
         if(empty($usuario)){
             $entrou=false;
         }
         else{
-            if(md5($data["txtSenha"]) != $usuario[0]->nm_senha){
+            if(md5($data["txtSenha"]) != $usuario->nm_senha){
                 $entrou=false;
             }
         }
@@ -104,11 +99,7 @@ class Controller
     {
         $data = filter_var_array($data,FILTER_SANITIZE_STRING);
         
-        $conversa = $data["hdConversa"];
-        $mensgagem = $data["txtMsg"];
-        $usuario = (new Usuario())->find("nm_login = '".$data["hdLoginMsg"]."'")->fetch(true);
-
-        $idUsuario = $usuario[0]->id;
+        $idUsuario = (new Usuario())->getId($data["hdLoginMsg"]);
 
         $mensagem = new Mensagem();
 
@@ -125,22 +116,20 @@ class Controller
         $data = filter_var_array($data,FILTER_SANITIZE_STRING);
         $idUsuario = (new Usuario())->getId($data["hdLoginCov"]);
 
-        $mensagens = (new Mensagem("id_conversa=".$data["hdNovaCov"]))->find()->fetch(true);
+        $mensagens = (new Mensagem())->find("id_conversa=".$data["hdNovaCov"])->fetch(true);
         
         (new Contato())->visualizar($idUsuario,$data["hdNovaCov"]);
-
         $callback["conversa"]="";
+        if(!empty($mensagens)){
+            foreach($mensagens as $mensagem){
+                if($mensagem->id_usuario == $idUsuario) { $tipo="enviada"; }
+                else { $tipo="recebida"; }
 
-        foreach($mensagens as $mensagem):
-
-            if($mensagem->id_usuario == $idUsuario) { $tipo="enviada"; }
-            else { $tipo="recebida"; }
-
-            $novaMsg=$this->view->render("mensagem",["tipo"=>$tipo,"texto"=>$mensagem->ds_mensagem]);
-            $callback["conversa"] = $callback["conversa"].$novaMsg;
-        endforeach;
-
-        echo json_encode($callback);
+                $novaMsg=$this->view->render("mensagem",["tipo"=>$tipo,"texto"=>$mensagem->ds_mensagem]);
+                $callback["conversa"] = $callback["conversa"].$novaMsg;
+            }
+            echo json_encode($callback);
+        }
     }
 
     public function atualizarMensagem(array $data):void

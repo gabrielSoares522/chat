@@ -97,6 +97,7 @@ $v->layout("_theme", []);
             var corpoChat = $("#corpo_chat");
             
             chat.css("display","block");
+            $(".lista_mensagens").html("");
 
             $.ajax({
                 url: form.attr("action"),
@@ -104,10 +105,7 @@ $v->layout("_theme", []);
                 type: "POST",
                 dataType: "json",
                 success: function(callback){
-                    //beforeSend: function(){ },
-                    //,complete: function(){ }
                     if(callback.conversa){
-                        $(".lista_mensagens").html("");
                         $(".lista_mensagens").append(callback.conversa);
                         corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
                     }
@@ -135,6 +133,7 @@ $v->layout("_theme", []);
                     if(callback.contato){
                         $("#lista_contatos").prepend(callback.contato);
                     }
+                    loginContato.val("");
                 }
             });
         });
