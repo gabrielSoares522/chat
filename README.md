@@ -1,12 +1,12 @@
-#Chat
+Chat
 ======================
 Um chat simples criado com PHP, mysql e javascript.
 
-##Prerequisitos
+Prerequisitos
 ----------------------
 composer instalado.
 
-##Iniciando
+Iniciando
 ----------------------
 1. clone o repositorio
 
