@@ -1,7 +1,6 @@
 <?php
 
 if($entrou == true){
-    
     session_start();
 
     $_SESSION['login'] = $login;

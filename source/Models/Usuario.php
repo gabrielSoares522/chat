@@ -16,16 +16,17 @@ class Usuario extends DataLayer
      */
     public function __construct()
     {
-        parent::__construct("Usuario", ["nm_login", "nm_email","nm_senha","ft_perfil"],"id",false);
+        parent::__construct("Usuario", ["nm_login", "nm_email","nm_senha","nm_foto","fotoPerfil"],"id",false);
     }
     
-    public function add($login,$email,$senha,$fotoPerfil)
+    public function add($login,$email,$senha,$nm_foto,$fotoPerfil)
     {
         $usuario = new Usuario();
         $usuario->nm_login = $login;
         $usuario->nm_email = $email;
         $usuario->nm_senha = md5($senha);
-        $usuario->ft_perfil = $fotoPerfil;
+        $usuario->nm_foto = $foto;
+        $usuario->fotoPerfil = $fotoPerfil;
     
         $usuario->save();
         return $usuario;

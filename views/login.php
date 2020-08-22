@@ -1,4 +1,10 @@
-<?php $v->layout("_theme", []); ?>
+<?php 
+session_start();
+unset($_SESSION["login"]);
+session_destroy();
+
+$v->layout("_theme", []);
+?>
 
 <div class ="banner_inicial">
 </div>

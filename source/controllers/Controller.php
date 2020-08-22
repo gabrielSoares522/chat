@@ -10,6 +10,7 @@ use League\Plates\Engine;
 class Controller
 {
     public $view;
+    
     public function __construct($router){
         $this->view = Engine::create(dirname(__DIR__,2)."/views","php");
         $this->view->addData(["router"=>$router]);
@@ -40,17 +41,38 @@ class Controller
 
     public function criarConta(array $data):void
     {
+        $usuario = new Usuario();
         $dados = filter_var_array($data,FILTER_SANITIZE_STRING);
             
         if(in_array("",$dados)){
-            $callback["message"] = message("Preencha todos os campos!","error");
+            $callback["erro"] = "Preencha todos os campos!";
             echo json_encode($callback);
             return;
         }
-    
-        $usuario = (new Usuario())->add($dados["txtLogin"],$dados["txtEmail"],$dados["txtSenha"],$dados["fotoPerfil"]);
+
+        $login = $dados["txtLogin"];
+        $email = $dados["txtEmail"];
+        $senha = $dados["txtSenha"];
+        $nmFoto = $_FILES['fotoPerfil']["name"];
+        $foto = $_FILES['fotoPerfil']['tmp_name'];
+        $foto = addslashes(file_get_contents($foto));
+
+        /*if($usuario->loginExiste($login)){
+            $callback["erro"] = "login já utilizado!";
+            echo json_encode($callback);
+            return;
+        }
+
+        if($usuario0->emailExiste($email)){
+            $callback["erro"] = "email já utilizado!";
+            echo json_encode($callback);
+            return;
+        }*/
+
+        $usuario->add($login,$email,$senha,$nmFoto,$foto);
         
-        echo $this->view->render("criarConta",[]);
+        $callback["cadastrado"] = "Usuario cadastrado com sucesso!";
+        echo json_encode($callback);
     }
 
     public function entrar(array $data):void
@@ -69,11 +91,6 @@ class Controller
             }
         }
         echo $this->view->render("entrar",["entrou" => $entrou, "login"=>$data["txtLogin"]]);
-    }
-
-    public function sair():void
-    {
-        echo $this->view->render("sair",[]);
     }
 
     public function addContato(array $data):void
