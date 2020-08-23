@@ -25,7 +25,7 @@ class Usuario extends DataLayer
         $usuario->nm_login = $login;
         $usuario->nm_email = $email;
         $usuario->nm_senha = md5($senha);
-        $usuario->nm_foto = $foto;
+        $usuario->nm_foto = $nm_foto;
         $usuario->fotoPerfil = $fotoPerfil;
     
         $usuario->save();
@@ -38,7 +38,8 @@ class Usuario extends DataLayer
         return $usuario[0];
     }
 
-    public function getId(string $login){
+    public function getId(string $login)
+    {
         $usuario = (new Usuario())->find("nm_login = '".$login."'")->fetch(true);
         return $usuario[0]->id;
     }
@@ -46,5 +47,25 @@ class Usuario extends DataLayer
     public function getContatos()
     {
         return (new Contato())->find("id_usuario = :uid","uid={$this->id}")->fetch(true);
+    }
+
+    public function loginExiste(string $login)
+    {
+        $usuario = (new Usuario())->find("nm_login = '".$login."'")->fetch(true);
+        if(empty($usuario)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public function emailExiste(string $email)
+    {
+        $usuario = (new Usuario())->find("nm_email = '".$email."'")->fetch(true);
+        if(empty($usuario)){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

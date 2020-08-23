@@ -57,17 +57,17 @@ class Controller
         $foto = $_FILES['fotoPerfil']['tmp_name'];
         $foto = addslashes(file_get_contents($foto));
 
-        /*if($usuario->loginExiste($login)){
+        if($usuario->loginExiste($login)){
             $callback["erro"] = "login já utilizado!";
             echo json_encode($callback);
             return;
         }
 
-        if($usuario0->emailExiste($email)){
+        if($usuario->emailExiste($email)){
             $callback["erro"] = "email já utilizado!";
             echo json_encode($callback);
             return;
-        }*/
+        }
 
         $usuario->add($login,$email,$senha,$nmFoto,$foto);
         
