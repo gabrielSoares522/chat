@@ -16,6 +16,7 @@ $v->layout("_theme", []);
         <p class="erro"></p>
     </form>
     <p>Não tem uma conta? <a href = "<?= $router->route("Controller.cadastro"); ?>">Cadastre-se</a></p>
+    <p><a href = "<?= $router->route("Controller.redefineSenha"); ?>">Esqueceu a senha?</a></p>
 </div>
 
 <?php $v->start("js"); ?>

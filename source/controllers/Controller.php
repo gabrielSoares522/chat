@@ -39,6 +39,11 @@ class Controller
         echo $this->view->render("cadastro",[]);
     }
 
+    public function redefineSenha():void
+    {
+        echo $this->view->render("redefineSenha",[]);
+    }
+
     public function criarConta(array $data):void
     {
         $usuario = new Usuario();
