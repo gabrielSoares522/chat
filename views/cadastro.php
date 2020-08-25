@@ -1,6 +1,6 @@
 <?php $v->layout("_theme", []); ?>
 
-<div class="form_cadastro">
+<div class="formulario">
     <form id="fmCadastro" method="post" action="<?= $router->route("Controller.criarConta"); ?>" enctype="multipart/form-data">
         <label for="txtLogin">Login</label>
         <input type="text" name="txtLogin" id="txtLogin">

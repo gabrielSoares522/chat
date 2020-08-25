@@ -56,14 +56,14 @@ a {
     border-radius: 3px;
 }
 
-.form_cadastro {
+.formulario {
     background-color: var(--cor-pricinpal);
     width: 300px;
     padding: 30px;
     position: relative;
     margin: 70px auto;
 }
-.form_cadastro * {
+.formulario * {
     display: block;
     width: 100%;
     margin:5px 0;
