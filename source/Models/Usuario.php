@@ -49,6 +49,17 @@ class Usuario extends DataLayer
         return (new Contato())->find("id_usuario = :uid","uid={$this->id}")->fetch(true);
     }
 
+    public function temContato($loginContato)
+    {
+        $contatos = $this->getContatos();
+        foreach($contatos as $contato){
+            if($contato->nm_contato == $loginContato){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function loginExiste(string $login)
     {
         $usuario = (new Usuario())->find("nm_login = '".$login."'")->fetch(true);

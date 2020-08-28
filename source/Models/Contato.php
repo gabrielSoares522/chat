@@ -24,8 +24,8 @@ class Contato extends DataLayer
         $conversa = new Conversa();
 
         $idConversa = $conversa->add();
-        $idUsuario = (new Usuario())->getUsuario($usuario)->id;
-        $idContato = (new Usuario())->getUsuario($contato)->id;
+        $idUsuario = (new Usuario())->getId($usuario);
+        $idContato = (new Usuario())->getId($contato);
         
         $contato1 = new Contato();
         $contato1->id_usuario = $idUsuario;

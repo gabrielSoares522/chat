@@ -206,3 +206,9 @@ li:after {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+.fotoPerfil{
+    float: left;
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+}

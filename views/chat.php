@@ -7,6 +7,7 @@ $v->layout("_theme", []);
 
 <div id="info_usuario">
     <div id="nome_usuario">
+        <img class="fotoPerfil" src="data:image/jpeg;base64,<?= base64_encode($foto); ?>"/>
         <p><?= $_SESSION["login"]; ?></p>
         <div class="dropdown">
             <span>Menu</span>
@@ -128,8 +129,6 @@ $v->layout("_theme", []);
                 type: "POST",
                 dataType: "json",                
                 success: function(callback){
-                    //beforeSend: function(){ },
-                    //,complete: function(){ }
                     if(callback.contato){
                         $("#lista_contatos").prepend(callback.contato);
                     }
@@ -160,8 +159,6 @@ $v->layout("_theme", []);
                 type: "POST",
                 dataType: "json",
                 success: function(callback){
-                    //beforeSend: function(){ },
-                    //,complete: function(){ }
                     if(callback.enviada){
                         $(".lista_mensagens").append(callback.enviada);
                         corpoChat.scrollTop(corpoChat.prop('scrollHeight'));

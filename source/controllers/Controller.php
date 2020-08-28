@@ -22,7 +22,7 @@ class Controller
         $login = $_SESSION["login"];
         if(isset($_SESSION["login"])){
             $usuario = (new Usuario())->getUsuario($login);
-            echo $this->view->render("chat",["contatos"=>$usuario->getContatos()]);
+            echo $this->view->render("chat",["contatos"=>$usuario->getContatos(),"foto"=>$usuario->fotoPerfil]);
         }
         else{
             echo $this->view->render("chat",[]);
@@ -101,19 +101,26 @@ class Controller
     public function addContato(array $data):void
     {
         $data = filter_var_array($data,FILTER_SANITIZE_STRING);
-        $usuario = (new Usuario())->find("nm_login = '".$data["txtAddContato"]."'")->fetch(true);
+        $loginUsuario =$data["hdLogin"];
+        $loginContato =$data["txtAddContato"];
 
+        $usuario = (new Usuario())->getUsuario($loginContato);
         if(empty($usuario)){
             $callback["menssagem"] = message("login invalidado!","error");
             echo json_encode($callback);
             return;
         }
 
-        $contato = new Contato();
-        $dadosContato = $contato->add($data["hdLogin"],$data["txtAddContato"]);
-        $callback["menssagem"] = message("Contato cadastrado!","success");
-        $callback["contato"] = $this->view->render("contato",$dadosContato);
-
+        $usuario = (new Usuario())->getUsuario($loginUsuario);
+        if($usuario->temContato($loginContato)==false){
+            $contato = new Contato();
+            $dadosContato = $contato->add($loginUsuario,$loginContato);
+            $callback["mensagem"] = message("Contato cadastrado!","success");
+            $callback["contato"] = $this->view->render("contato",$dadosContato);
+        }
+        else{
+            $callback["mensagem"] = message("Ja existe o contato!","error");
+        }
         echo json_encode($callback);
     }
 
