@@ -7,14 +7,24 @@ $v->layout("_theme", []);
 
 <div id="info_usuario">
     <div id="nome_usuario">
-        <img class="fotoPerfil" src="data:image/jpeg;base64,<?= base64_encode($foto); ?>"/>
-        <p><?= $_SESSION["login"]; ?></p>
-        <div class="dropdown">
-            <span>Menu</span>
-            <div class="dropdown-content">
-                <a href = "<?= $router->route("Controller.login"); ?>">Sair</a>
-            </div>
-        </div>
+        <table>
+        <tr>
+            <td>
+                <img class="fotoPerfil" src="data:image/jpeg;base64,<?= base64_encode($foto); ?>"/>
+            </td>
+            <td>
+                <h1><?= $_SESSION["login"]; ?></h1>
+            </td>
+            <td>
+                <div class="dropdown">
+                    <span>Menu</span>
+                    <div class="dropdown-content">
+                        <a href = "<?= $router->route("Controller.login"); ?>">Sair</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </table>
     </div>
     <div id="lista_contatos">
         <form class="form_abrir_conversa" method="post" action="<?= $router->route("Controller.buscarConversa");?>">
@@ -40,12 +50,12 @@ $v->layout("_theme", []);
 </div>
 <div id="chat">
     <div id="cabecalho_chat">
-        <p>Contato</p>
+        <h2>Contato</h2>
     </div>
     <div id="corpo_chat">
         <ul class="lista_mensagens">
         </ul>
-        <form class="fm_atualizar_mensagem" method="post" action = "<?= $router->route("Controller.atualizarMensagem"); ?>">
+        <form class="fm_atualizar_mensagem" method = "post" action = "<?= $router->route("Controller.atualizarMensagem"); ?>">
         </form>
     </div>
     <div id="form_mensagem">
@@ -87,7 +97,7 @@ $v->layout("_theme", []);
             var cabecalho = $("#cabecalho_chat");
             var novaCov = $("#hdNovaCov");
 
-            cabecalho.html("<p>"+botao.text()+"</p>");
+            cabecalho.html("<h2>"+botao.text()+"</h2>");
             novaCov.val(botao.val());
             conversa.val(botao.val());
         });

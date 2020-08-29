@@ -2,7 +2,7 @@
 
 <div class="formulario">
     <form id="fmNovaSenha" method="get" action="<?= $router->route("Controller.redefineSenha");?>">
-        <label>digite o e-mail da sua conta para enviar uma nova senha</label>
+        <label>Digite o e-mail da sua conta para enviar uma nova senha!</label>
         <input type="email" name="txtEmail" id="txtEmail" value="">
         <p class="erro"></p>
         <button type="submit">Enviar</button>
