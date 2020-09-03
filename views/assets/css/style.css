@@ -79,6 +79,11 @@ h1, h2, span {
     box-sizing: border-box;
 }
 
+#mostraFoto {
+    width: 50%;
+    margin: auto;
+}
+
 #info_usuario {
     position: fixed;
     width: var(--tam-info_usuario);

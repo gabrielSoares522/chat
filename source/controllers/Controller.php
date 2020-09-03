@@ -58,6 +58,8 @@ class Controller
         $login = $dados["txtLogin"];
         $email = $dados["txtEmail"];
         $senha = $dados["txtSenha"];
+        //$nmFoto = $dados['fotoNome'];
+        //$foto = $dados['fotoPerfil'];
         $nmFoto = $_FILES['fotoPerfil']["name"];
         $foto = $_FILES['fotoPerfil']['tmp_name'];
         $foto = addslashes(file_get_contents($foto));

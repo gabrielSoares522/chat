@@ -17,7 +17,7 @@ $v->layout("_theme", []);
             </td>
             <td>
                 <div class="dropdown">
-                    <span>Menu</span>
+                    <span>menu</span>
                     <div class="dropdown-content">
                         <a href = "<?= $router->route("Controller.login"); ?>">Sair</a>
                     </div>

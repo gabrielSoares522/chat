@@ -12,6 +12,7 @@
         <input type="password" name="txtRepSenha" id="txtRepSenha">
         <label>Foto de perfil</label>
         <input type="file" name="fotoPerfil" id="fotoPerfil" accept="image/*">
+        <img id = "mostraFoto" src="#" alt=""/>
         <p class="erro"></p>
         <input type="submit" id="btnCadastrar" name="btnCadastrar" value="Cadastrar">
     </form>
@@ -21,15 +22,41 @@
 <?php $v->start("js"); ?>
 <script>
     $(function(){
+        var txtFtPerfil = $("#fotoPerfil");
+        var mostraFoto = $("#mostraFoto");
         var form = $("#fmCadastro");
+        var txtLogin = $("#txtLogin");
+        var txtEmail = $("#txtEmail");
+        var txtSenha = $("#txtSenha");
+        var txtRepSenha = $("#txtRepSenha");
+        var blob;
+
+        function teste() {
+            txtLogin.val("solange");
+            txtEmail.val("solange@gmail.com");
+            txtSenha.val("1234");
+            txtRepSenha.val("1234");
+        }
+        
+        txtFtPerfil.change(function(){
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    mostraFoto.attr('src', e.target.result);
+                    blob = e.target.result;
+                    console.log(e.target);
+                }
+
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
         form.submit(function (e){
+            teste();
+
             var erro = $(".erro");
-            var txtLogin = $("#txtLogin");
-            var txtEmail = $("#txtEmail");
-            var txtSenha = $("#txtSenha");
-            var txtRepSenha = $("#txtRepSenha");
-            var txtFtPerfil = $("#fotoPerfil");
-            
+                        
             erro.text("");
             e.preventDefault();
 
@@ -59,6 +86,15 @@
                 return;
             }
 
+            var dados = {
+                txtLogin: txtLogin.val(),
+                txtEmail: txtEmail.val(),
+                txtSenha: txtSenha.val(),
+                fotoPerfil: blob,
+                fotoNome:"aaa.png"
+            };
+
+            console.log(dados);
             $.ajax({
                 url: form.attr("action"),
                 data: new FormData(form[0]),
