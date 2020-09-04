@@ -13,7 +13,6 @@
     </main>
 
     <script src="<?= url("/views/assets/js/jquery.js"); ?>"></script>
-    <script src="<?= url("/views/assets/js/jquery-image-blob.min.js"); ?>"></script>
 
     <?= $v->section("js"); ?>
 </body>

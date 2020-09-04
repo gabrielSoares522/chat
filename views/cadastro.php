@@ -22,79 +22,70 @@
 <?php $v->start("js"); ?>
 <script>
     $(function(){
-        var txtFtPerfil = $("#fotoPerfil");
+        var fotoPerfil = $("#fotoPerfil");
         var mostraFoto = $("#mostraFoto");
         var form = $("#fmCadastro");
         var txtLogin = $("#txtLogin");
         var txtEmail = $("#txtEmail");
         var txtSenha = $("#txtSenha");
         var txtRepSenha = $("#txtRepSenha");
-        var blob;
-
+        var erro = $(".erro");
+        
         function teste() {
-            txtLogin.val("solange");
-            txtEmail.val("solange@gmail.com");
+            var letras = "1234567890";
+            var randomico = "daniel";
+
+            for(var i=0;i<3;i++) {
+                randomico+=letras.substr(Math.floor(Math.random()*letras.length),1);
+            }
+
+            txtLogin.val(randomico);
+            txtEmail.val(randomico+"@gmail.com");
             txtSenha.val("1234");
             txtRepSenha.val("1234");
         }
         
-        txtFtPerfil.change(function(){
+        fotoPerfil.change(function () {
             if (this.files && this.files[0]) {
+                //teste();
+                
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
                     mostraFoto.attr('src', e.target.result);
-                    blob = e.target.result;
-                    console.log(e.target);
                 }
 
                 reader.readAsDataURL(this.files[0]);
             }
         });
 
-        form.submit(function (e){
-            teste();
+        function checarVazio(campo) {
+            if(campo.val() =="") {
+                erro.text("preencha todos os campos!");
+                return true;
+            }
+            else { return false; }
+        }
 
-            var erro = $(".erro");
-                        
+        form.submit(function (e) {     
             erro.text("");
             e.preventDefault();
 
-            if(txtLogin.val() =="") {
-                erro.text("preencha o campo login");
-                return;
-            }
-            
-            if(txtEmail.val() =="") {
-                erro.text("preencha o campo email");
-                return;
-            }
-            
-            if(txtSenha.val() =="") {
-                erro.text("preencha o campo senha");
-                return;
-            }
-            if(txtRepSenha.val() =="") {
-                erro.text("preencha o campo repetir senha");
-                return;
-            }
+            if (checarVazio(txtLogin)) { return; }
+
+            if (checarVazio(txtEmail)) { return; }
+
+            if (checarVazio(txtSenha)) { return; }
+
+            if (checarVazio(txtRepSenha)) { return; }
 
             if(txtSenha.val() != txtRepSenha.val()) {
                 txtSenha.val("");
                 txtRepSenha.val("");
-                erro.text("senha digitada de forma incorreta");
+                erro.text("senha digitada de forma incorreta!");
                 return;
             }
 
-            var dados = {
-                txtLogin: txtLogin.val(),
-                txtEmail: txtEmail.val(),
-                txtSenha: txtSenha.val(),
-                fotoPerfil: blob,
-                fotoNome:"aaa.png"
-            };
-
-            console.log(dados);
             $.ajax({
                 url: form.attr("action"),
                 data: new FormData(form[0]),
@@ -103,16 +94,15 @@
                 cache: false,
                 contentType: false,
                 processData: false,
-                success: function(callback){
-                    console.log("recebido");
-                    if(callback.erro){
+                success: function (callback) {
+                    console.log(callback);
+                    
+                    if(callback.erro) {
                         erro.text(callback.erro);
-                        console.log("erro");
                     }
-                    if(callback.cadastrado){
-                        console.log("cadastrado");
-                        var telaLogin = $("#linkLogin").val();
-                        $(location).attr('href',telaLogin);
+
+                    if(callback.cadastrado) {
+                        $(location).attr('href', $("#linkLogin").val());
                     }
                 }
             });
