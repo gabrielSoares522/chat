@@ -12,7 +12,7 @@
         <?= $v->section("content"); ?>
     </main>
 
-    <script src="<?= url("/views/assets/js/jquery.js"); ?>"></script>
+    <script src="<?= url("/views/assets/jquery.js"); ?>"></script>
 
     <?= $v->section("js"); ?>
 </body>

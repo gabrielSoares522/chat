@@ -1,4 +1,6 @@
 vendor/
 composer.lock
 composer.phar
-views/assets/js/jquery.js
+views/assets/jquery.js
+node_modules/
+package-lock.json
