@@ -12,7 +12,7 @@ class Controller
     public $view;
     
     public function __construct($router){
-        $this->view = Engine::create(dirname(__DIR__,2)."/views","php");
+        $this->view = new Engine(dirname(__DIR__,2)."/views","php");
         $this->view->addData(["router"=>$router]);
     }
 
@@ -75,10 +75,15 @@ class Controller
             return;
         }
 
-        $usuario->add($login,$email,$senha,$nmFoto,$foto);
-        
-        $callback["cadastrado"] = "Usuario cadastrado com sucesso!";
-        echo json_encode($callback);
+        $id = $usuario->add($login,$email,$senha,$nmFoto,$foto);
+        if($id){
+            $callback["sucesso"] = "Cadastro realizado com sucesso!";
+            echo json_encode($callback);
+        }
+        else{
+            $callback["erro"] ="Erro ao cadastrar!";
+            echo json_encode($callback);
+        }
     }
 
     public function entrar(array $data):void

@@ -2,7 +2,7 @@
 if(empty($_SESSION["login"])){
     header("location:".$router->route("Controller.login"));
 }
-$v->layout("_theme", []);
+$this->layout("_theme", []);
 ?>
 
 <div id="info_usuario">
@@ -68,7 +68,7 @@ $v->layout("_theme", []);
     </div>
 </div>
 
-<?php $v->start("js"); ?>
+<?php $this->start("js"); ?>
 <script>
     $(function(){
         setInterval(() => {
@@ -180,4 +180,4 @@ $v->layout("_theme", []);
         });
     });
 </script>
-<?php $v->end(); ?>
+<?php $this->end(); ?>

@@ -16,20 +16,32 @@ class Usuario extends DataLayer
      */
     public function __construct()
     {
-        parent::__construct("Usuario", ["nm_login", "nm_email","nm_senha","nm_foto","fotoPerfil"],"id",false);
+        parent::__construct("usuario", ["nm_login", "nm_email","nm_senha","nm_foto","fotoPerfil"],"id",false);
     }
     
     public function add($login,$email,$senha,$nm_foto,$fotoPerfil)
-    {
-        $usuario = new Usuario();
-        $usuario->nm_login = $login;
-        $usuario->nm_email = $email;
-        $usuario->nm_senha = md5($senha);
-        $usuario->nm_foto = $nm_foto;
-        $usuario->fotoPerfil = $fotoPerfil;
-    
-        $usuario->save();
-        return $usuario;
+    {   
+        /*$conn = new mysqli("localhost", "root", "1234","chat");
+        if ($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
+          return false;
+        }
+        $sql = "INSERT INTO usuario (id, nm_login, nm_email,nm_senha,nm_foto,fotoPerfil) VALUES (2,'$login', '$email', '"+md5($senha)+"','$nm_foto','$fotoPerfil')";
+
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return true;
+          } else {
+            $conn->close();
+            return false;
+          }*/
+        $novo = new Usuario();
+        $novo->nm_login = $login;
+        $novo->nm_email = $email;
+        $novo->nm_senha = md5($senha);
+        $novo->nm_foto = $nm_foto;
+        $novo->fotoPerfil = $fotoPerfil;
+        return $novo->save();
     }
 
     public function getUsuario(string $login)

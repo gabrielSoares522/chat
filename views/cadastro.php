@@ -1,4 +1,4 @@
-<?php $v->layout("_theme", []); ?>
+<?php $this->layout("_theme", []); ?>
 
 <div class="formulario">
     <form id="fmCadastro" method="post" action="<?= $router->route("Controller.criarConta"); ?>" enctype="multipart/form-data">
@@ -19,7 +19,7 @@
     <input type="hidden" name="linkLogin" id="linkLogin" value = "<?= $router->route("Controller.login"); ?>">
 </div>
 
-<?php $v->start("js"); ?>
+<?php $this->start("js"); ?>
 <script>
     $(function(){
         var fotoPerfil = $("#fotoPerfil");
@@ -109,4 +109,4 @@
         });
     });
 </script>
-<?php $v->end(); ?>
+<?php $this->end(); ?>

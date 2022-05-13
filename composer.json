@@ -1,5 +1,5 @@
 {
-    "name": "gabrielSoares522/chat",
+    "name": "gabrielsoares522/chat",
     "description": "Aplicação web de um chat",
     "minimum-stability": "stable",
     "license": "MIT",
@@ -19,7 +19,7 @@
     },
     "require": {
       "coffeecode/router": "1.0.*",
-      "coffeecode/datalayer": "1.1.*",
-      "league/plates": "v4.0.0-alpha"
+      "coffeecode/datalayer": "2.0.*",
+      "league/plates": "v3.4.0"
     }
 }

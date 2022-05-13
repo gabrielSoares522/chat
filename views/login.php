@@ -3,9 +3,8 @@ session_start();
 unset($_SESSION["login"]);
 session_destroy();
 
-$v->layout("_theme", []);
+$this->layout("_theme", []);
 ?>
-
 <div class ="banner_inicial">
 </div>
 <div class="form_login">
@@ -19,7 +18,7 @@ $v->layout("_theme", []);
     <p><a href = "<?= $router->route("Controller.redefineSenha"); ?>">Esqueceu a senha?</a></p>
 </div>
 
-<?php $v->start("js"); ?>
+<?php $this->start("js"); ?>
 <script>
     $(function(){
         $("form").submit(function (e){
@@ -42,4 +41,4 @@ $v->layout("_theme", []);
         });
     });
 </script>
-<?php $v->end(); ?>
+<?php $this->end(); ?>
