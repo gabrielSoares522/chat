@@ -33,13 +33,10 @@ class Usuario extends DataLayer
 
     public function getUsuario($login)
     {   
-        return null;
-        /*$usuario = (new Usuario())->find("nm_login = '".$login."'")->fetch(true);
-        if(empty($usuario) == true){
-            return null;
-        }else{
+        $usuario = (new Usuario())->find("nm_login = '".$login."'")->fetch(true);
+        if(empty($usuario) == false){
             return $usuario[0];
-        }*/
+        }
     }
 
     public function getId($login)
@@ -50,17 +47,22 @@ class Usuario extends DataLayer
     
     public function getContatos()
     {
-        return (new Contato())->find("id_usuario = {$this->id}")->fetch(true);
+        return (new Contato())->find("id_usuario = ".$this->id)->fetch(true);
     }
 
     public function temContato($loginContato)
     {
         $contatos = $this->getContatos();
-        foreach($contatos as $contato){
-            if($contato->nm_contato == $loginContato){
-                return true;
-            }
+        if(empty($contatos) == true){
+            return false;
         }
+        else{
+            foreach($contatos as $contato){
+                if($contato->nm_contato == $loginContato){
+                    return true;
+                }
+            }
+        }   
         return false;
     }
 

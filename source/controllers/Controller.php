@@ -94,7 +94,7 @@ class Controller
         $data = filter_var_array($data,FILTER_SANITIZE_STRING);
         $entrou = true;
         
-        $usuario = (new Usuario())->getUsuario($data["txtLogin"]);
+       $usuario = (new Usuario())->getUsuario($data["txtLogin"]);
 
         if(empty($usuario)){
             $entrou=false;

@@ -33,7 +33,7 @@ $this->layout("_theme", []);
             <?php
             if(!empty($contatos)):
                 foreach($contatos as $item):
-                    $v->insert("contato",["nome"=>$item->nm_contato,"conversa"=>$item->id_conversa]);
+                    $this->insert("contato",["nome"=>$item->nm_contato,"conversa"=>$item->id_conversa]);
                 endforeach;
             endif;
             ?>

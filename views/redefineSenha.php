@@ -1,4 +1,4 @@
-<?php $v->layout("_theme", []); ?>
+<?php $this->layout("_theme", []); ?>
 
 <div class="formulario">
     <form id="fmNovaSenha" method="get" action="<?= $router->route("Controller.redefineSenha");?>">
@@ -9,7 +9,7 @@
     </form>
 </div>
 
-<?php $v->start("js"); ?>
+<?php $this->start("js"); ?>
 <script>
     $(function(){
         var form = $("#fmNovaSenha");
@@ -28,4 +28,4 @@
         });
     });
 </script>
-<?php $v->end(); ?>
+<?php $this->end(); ?>
