@@ -97,11 +97,11 @@
                 success: function (callback) {
                     console.log(callback);
                     
-                    if(callback.erro) {
+                    if(callback.status == "erro") {
                         erro.text(callback.erro);
                     }
 
-                    if(callback.cadastrado) {
+                    if(callback.status == "cadastrado") {
                         $(location).attr('href', $("#linkLogin").val());
                     }
                 }

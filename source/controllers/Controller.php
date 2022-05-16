@@ -48,42 +48,45 @@ class Controller
     {
         $usuario = new Usuario();
         $dados = filter_var_array($data,FILTER_SANITIZE_STRING);
-            
+        $callback;    
         if(in_array("",$dados)){
             $callback["erro"] = "Preencha todos os campos!";
+            $callback["status"]="erro";
             echo json_encode($callback);
             return;
         }
 
-        $login = $dados["txtLogin"];
-        $email = $dados["txtEmail"];
-        $senha = $dados["txtSenha"];
-        $nmFoto = $_FILES['fotoPerfil']["name"];
+        $nm_login = $dados["txtLogin"];
+        $nm_email = $dados["txtEmail"];
+        $nm_senha = $dados["txtSenha"];
+        $nm_foto = $_FILES['fotoPerfil']["name"];
         $foto = $_FILES['fotoPerfil']['tmp_name'];
-        $foto = file_get_contents($foto);
+        $fotoPerfil = file_get_contents($foto);
         //$foto = addslashes($foto);
-
-        if($usuario->loginExiste($login)){
+        
+        if($usuario->loginExiste($nm_login) == true){
             $callback["erro"] = "login já utilizado!";
+            $callback["status"]="erro";
             echo json_encode($callback);
             return;
         }
 
-        if($usuario->emailExiste($email)){
+        if($usuario->emailExiste($nm_email) == true){
             $callback["erro"] = "email já utilizado!";
+            $callback["status"]="erro";
             echo json_encode($callback);
             return;
         }
-
-        $id = $usuario->add($login,$email,$senha,$nmFoto,$foto);
-        if($id){
-            $callback["sucesso"] = "Cadastro realizado com sucesso!";
-            echo json_encode($callback);
+        $result = $usuario->add($nm_login,$nm_email,$nm_senha,$nm_foto,$fotoPerfil);
+        if($result == true){
+            $callback["mensagem"] = "Cadastro realizado com sucesso!";
+            $callback["status"] = "cadastrado";
         }
         else{
-            $callback["erro"] ="Erro ao cadastrar!";
-            echo json_encode($callback);
+            $callback["erro"] = "Erro ao cadastrar!";
+            $callback["status"] = "erro";
         }
+        echo json_encode($callback);
     }
 
     public function entrar(array $data):void
@@ -111,7 +114,7 @@ class Controller
         $loginContato =$data["txtAddContato"];
 
         $usuario = (new Usuario())->getUsuario($loginContato);
-        if(empty($usuario)){
+        if($usuario == null){
             $callback["menssagem"] = message("login invalidado!","error");
             echo json_encode($callback);
             return;
