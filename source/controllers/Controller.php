@@ -152,8 +152,9 @@ class Controller
     public function buscarConversa(array $data):void
     {
         $data = filter_var_array($data,FILTER_SANITIZE_STRING);
-        $idUsuario = (new Usuario())->getId($data["hdLoginCov"]);
 
+        $idUsuario = (new Usuario())->getId($data["hdLoginCov"]);
+        
         $mensagens = (new Mensagem())->find("id_conversa=".$data["hdNovaCov"])->fetch(true);
         
         (new Contato())->visualizar($idUsuario,$data["hdNovaCov"]);

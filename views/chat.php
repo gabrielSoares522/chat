@@ -91,7 +91,7 @@ $this->layout("_theme", []);
                 });
         }, 1000);
         
-        $(".item_contato").click(function (e){
+        $(".item_contato").mouseover(function (e){
             var botao = $(this);
             var conversa = $("#hdConversa");
             var cabecalho = $("#cabecalho_chat");
@@ -116,6 +116,8 @@ $this->layout("_theme", []);
                 type: "POST",
                 dataType: "json",
                 success: function(callback){
+                    console.log(callback);
+
                     if(callback.conversa){
                         $(".lista_mensagens").append(callback.conversa);
                         corpoChat.scrollTop(corpoChat.prop('scrollHeight'));
