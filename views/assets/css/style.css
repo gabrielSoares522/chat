@@ -1,6 +1,7 @@
 :root {
-    --cor-pricinpal:#33cc60;
-    --cor-secundaria:#33cc99;
+    --cor-pricinpal:#fefeff;
+    --cor-secundaria:#f0f3f4;
+    --cor-titulo:#1977f3;
     --cor-notificacao:#ff6633;
     --cor-enviadas:#99ffcc;
     --cor-recebidas:#dddddd;
@@ -8,11 +9,15 @@
     --tam-cabecalho:80px;
     --tam-form_msg:40px;
     --tam-info_usuario:350px;
+    --cor-botao-principal: #0b7cfe;
+    --cor-botao-secundario: #00a400;
+    --cor-botao-principal-hover: #4d4cfe;
 }
 
 body{
     margin: 0;
     padding: 0;
+    background-color: var(--cor-secundaria);
 }
 
 a {
@@ -23,47 +28,60 @@ a {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-h1, h2, span {
-    color: #fff;
-}
-
 .erro{
-    color: rgb(199, 50, 50);
+    color: #c73232;
 }
 
+h1, h2, span {
+    color: #5f5f5f;
+}
+#tituloChat{
+    color: var(--cor-titulo);
+    text-align: center;
+    font-weight: bold;
+}
 .banner_inicial {
-    top:0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: var(--cor-enviadas);
+    width: 100%;
+    height: 100%;
     position: fixed;
-    z-index: 1;
+    display: flex;
+    align-items: center;
 }
 
 .form_login {
     background-color: var(--cor-pricinpal);
-    position: fixed;
+    border-radius: 5px;
+    box-shadow: rgb(202, 207, 207) 0px 0px 20px;
+    min-height: 300px;
     width: 300px;
-    top: 0;
-    right: 0;
-    bottom:0;
+    margin: auto;
     padding:50px 30px;
     text-align:center;
-    justify-content: center;
-    align-items: center;
-    display:table-column;
-    z-index: 2;
+    display: flex;
+    flex-direction: column;
 }
 
-.form_login form input {
-    width: 96%;
+.form_login form input, #btnEntrar {
+    outline: none;
+    border: 1px solid var(--cor-secundaria);
+    width: 92%;
     margin:2%;
-    padding:3px;
+    padding: 10px 2%;
     box-sizing: border-box;
-    border-radius: 3px;
+    border-radius: 5px;
 }
-
+.form_login form input:focus {
+    border: 1px solid var(--cor-titulo);
+}
+#btnEntrar {
+    background-color: var(--cor-botao-principal);
+    color: #fff;
+    font-weight: bold;
+}
+#btnEntrar:hover{
+    cursor: pointer;
+    background-color: var(--cor-botao-principal-hover);
+}
 .formulario {
     background-color: var(--cor-pricinpal);
     width: 300px;
