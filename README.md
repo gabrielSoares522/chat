@@ -1,5 +1,4 @@
 # Chat
-======================
 Um chat simples criado com PHP, mysql e javascript.
 
 ## Requisitos
@@ -8,7 +7,6 @@ Um chat simples criado com PHP, mysql e javascript.
 - git instalado
 
 ## Iniciando
-----------------------
 1. clone o repositorio no diretorio htdocs.
 ```console
 git clone https://github.com/gabrielSoares522/chat.git
@@ -41,3 +39,21 @@ const DATA_LAYER_CONFIG = [
     ]
 ];
 ```
+
+## Novas alterações
+- [ ] Registro de mensagens não lidas.
+- [ ] Alterar design.
+    - [ ] telas de login e registro.
+    - [ ] lista de contatos.
+        - [ ] icone  de mensagem não lida.
+    - [ ] lista de mensagens.
+        - [ ] botao adicionar imagem.
+        - [ ] botao adicionar arquivo.
+        - [ ] botao enviar mensagem.
+    - [ ] titulo do perfil.
+    - [ ] menu do perfil.
+- [ ] Abstrair conteudo da mensagem.
+    - [ ] registro de imagens na conversa.
+    - [ ] registro de arquivos na conversa.
+- [ ] Verificar o email do usuário.
+- [ ] Recuperar senha.
