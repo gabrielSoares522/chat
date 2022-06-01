@@ -1,5 +1,5 @@
 :root {
-    --cor-pricinpal:#fefeff;
+    --cor-pricinpal:#fff;
     --cor-secundaria:#f0f3f4;
     --cor-titulo:#1977f3;
     --cor-notificacao:#ff6633;
@@ -12,6 +12,9 @@
     --cor-botao-principal: #0b7cfe;
     --cor-botao-secundario: #00a400;
     --cor-botao-principal-hover: #4d4cfe;
+    --cor-botao-menu: #fff;
+    --cor-botao-menu-hover: #f5f5f5;
+    --cor-botao-menu-active: #f2f2f2;
 }
 
 body {
@@ -70,6 +73,7 @@ h1, h2, span {
 input, #btnEntrar {
     outline: none;
     border: 1px solid var(--cor-secundaria);
+    background-color: var(--cor-secundaria);
     width: 92%;
     margin:2%;
     padding: 10px 2%;
@@ -84,7 +88,7 @@ input:focus {
     color: #fff;
     font-weight: bold;
 }
-#btnEntrar:hover, #btnCadastrar:hover {
+#btnEntrar:hover, #btnCadastrar:hover,#btnAddContato:hover {
     cursor: pointer;
     background-color: var(--cor-botao-principal-hover);
 }
@@ -118,6 +122,7 @@ input:focus {
     top: 0;
     bottom: 0;
     background-color: var(--cor-pricinpal);
+    border-right: 1px solid #999;
     margin: 0;
     padding: 0;
 }
@@ -131,29 +136,53 @@ input:focus {
     width: 100%;
 }
 
-#nome_usuario table {
+.dados_usuario{
     height: var(--tam-cabecalho);
     width: 100%;
     padding: 0;
     margin: 0;
 }
 
-#nome_usuario table tr td h1 {
+.dados_usuario tr td h1 {
     font-weight: bolder;
     margin: 0 10px;
 }
 
 .fotoPerfil {
-    border: 1px solid black;
+    border-radius: 50%;
     margin: 0 5px;
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
+}
+.form_add_contato{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#txtAddContato{
+    width: 96%;
+}
+#btnAddContato {
+    background-color: var(--cor-botao-principal);
+    color: #fff;
+    font-weight: bold;
+    width: 96%;
+    border: none;
+    padding: 10px;
+    margin: auto;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#btnAddContato:hover {
+    background-color: var(--cor-botao-principal-hover);
 }
 
 #chat {
     display: none;
     position: fixed;
-    left: var(--tam-info_usuario);
+    /*flex-direction: column;*/
+    left: calc(var(--tam-info_usuario) + 1px);
     right: 0;
     top: 0;
     bottom: 0;
@@ -165,6 +194,7 @@ input:focus {
     box-sizing: border-box;
     padding: 10px 5px;
     width: 100%;
+    box-shadow: 2px 0px 2px rgb(202, 207, 207);
     position: absolute;
 }
 
@@ -178,35 +208,63 @@ input:focus {
 
 #form_mensagem {
     background-color: var(--cor-pricinpal);
-    height: var(--tam-form_msg);
+    min-height: var(--tam-form_msg);
     box-sizing: border-box;
-    padding: 10px 5px;
+    padding: 0 5px;
     width: 100%;
     position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     bottom: 0;
+}
+.form_add_mensagem{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+#txtMsg{
+    margin: 10px;
+}
+#btnEnviar{
+    background-color: var(--cor-botao-principal);
+    color: #fff;
+    font-weight: bold;
+    width: 100px;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#btnEnviar:hover{
+    background-color: var(--cor-botao-principal-hover);
 }
 
 .item_contato {
-    color: #fff;
     box-sizing: border-box;
     display: block;
     height: 70px;
-    width: 100%;
+    width: 98%;
+    margin: 1%;
     padding-left: 30px;
     font-size: larger;
     text-align: left;
-    background-color: chartreuse;
+    background-color: var(--cor-botao-menu);
     border:none;
-    border-bottom: 1px solid seagreen;
-    border-radius: 3px;
+    border-radius: 5px;
     font-weight: bolder;
 }
 
 .item_contato:hover {
     cursor: pointer;
-    background-color: var(--cor-secundaria);
+    background-color: var(--cor-botao-menu-hover);
 }
-
+.item_contato:active{
+    background-color: var(--cor-botao-menu-active);
+}
 .msg {
     padding: 2px 10px;
     width: 200px;
@@ -242,26 +300,17 @@ li:after {
     clear: both;
 }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown span {
-    padding: 0 9px 9px 9px;
-    font-size: 25px;
-}
-
 .dropdown-content {
     display: none;
-    position: absolute;
-    background-color: var(--cor-secundaria);
-    min-width: 50px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px 16px;
+    position:absolute;
+    background-color: var(--cor-pricinpal);
+    width: 94%;
+    margin: 0 1%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 2%;
     z-index: 1;
 }
-  
-.dropdown:hover .dropdown-content {
+#nome_usuario:hover .dropdown-content {
     display: block;
 }

@@ -7,24 +7,15 @@ $this->layout("_theme", []);
 
 <div id="info_usuario">
     <div id="nome_usuario">
-        <table>
-        <tr>
-            <td>
-                <img class="fotoPerfil" src="data:image/jpeg;base64,<?= base64_encode($foto); ?>"/>
-            </td>
-            <td>
-                <h1><?= $_SESSION["login"]; ?></h1>
-            </td>
-            <td>
-                <div class="dropdown">
-                    <span>menu</span>
-                    <div class="dropdown-content">
-                        <a href = "<?= $router->route("Controller.login"); ?>">Sair</a>
-                    </div>
-                </div>
-            </td>
-        </tr>
+        <table class="dados_usuario">
+            <tr>
+                <td><img class="fotoPerfil" src="data:image/jpeg;base64,<?= base64_encode($foto); ?>"/></td>
+                <td><h1><?= $_SESSION["login"]; ?></h1></td>
+            </tr>
         </table>
+        <div class="dropdown-content">
+            <a href = "<?= $router->route("Controller.login"); ?>">Sair</a>
+        </div>
     </div>
     <div id="lista_contatos">
         <form class="form_abrir_conversa" method="post" action="<?= $router->route("Controller.buscarConversa");?>">
@@ -44,7 +35,7 @@ $this->layout("_theme", []);
             <input type="hidden" name="hdLogin" id="hdLogin" value="<?= $_SESSION["login"] ?>"/>
             
             <input type="text" id="txtAddContato" name="txtAddContato"/>
-            <input type="submit" value="Adicionar" id="btnAddContato" name="btnAddContato"/>
+            <button type="submit" id="btnAddContato" name="btnAddContato">Adicionar</button>
         </form>
     </div>
 </div>
@@ -63,7 +54,7 @@ $this->layout("_theme", []);
             <input type="hidden" name="hdLoginMsg" id="hdLoginMsg" value="<?= $_SESSION["login"] ?>"/>
             <input type="hidden" name="hdConversa" id="hdConversa">
             <input type="text" name="txtMsg" id="txtMsg">
-            <button>Enviar</button>
+            <button id="btnEnviar">Enviar</button>
         </form>
     </div>
 </div>
@@ -107,7 +98,7 @@ $this->layout("_theme", []);
             var chat = $("#chat");
             var corpoChat = $("#corpo_chat");
             
-            chat.css("display","block");
+            chat.css("display","flex");
             $(".lista_mensagens").html("");
 
             $.ajax({
