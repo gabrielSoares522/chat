@@ -2,6 +2,7 @@
 if(empty($_SESSION["login"])){
     header("location:".$router->route("Controller.login"));
 }
+$returnToLogin = $router->route("Controller.login");
 $this->layout("_theme", []);
 ?>
 
@@ -14,9 +15,10 @@ $this->layout("_theme", []);
             </tr>
         </table>
         <div class="dropdown-content">
-            <a href = "<?= $router->route("Controller.login"); ?>">Sair</a>
+            <a href="<?= $router->route("Controller.login"); ?>">Sair</a>
         </div>
     </div>
+    <hr>
     <div id="lista_contatos">
         <form class="form_abrir_conversa" method="post" action="<?= $router->route("Controller.buscarConversa");?>">
             <input type="hidden" name="hdLoginCov" id="hdLoginCov" value="<?= $_SESSION["login"] ?>"/>
@@ -30,11 +32,12 @@ $this->layout("_theme", []);
             ?>
         </form>
     </div>
+    <hr>
     <div id="div_add_contato">
         <form class="form_add_contato" method="post" action="<?= $router->route("Controller.addContato"); ?>">
             <input type="hidden" name="hdLogin" id="hdLogin" value="<?= $_SESSION["login"] ?>"/>
             
-            <input type="text" id="txtAddContato" name="txtAddContato"/>
+            <input type="text" id="txtAddContato" name="txtAddContato"  placeholder="digite o login do contato" />
             <button type="submit" id="btnAddContato" name="btnAddContato">Adicionar</button>
         </form>
     </div>
